@@ -1,0 +1,66 @@
+:root{
+  --void:#04070a; --plate:rgba(8,13,19,.9); --edge:#1d2b38; --steel:#8aa0b2;
+  --text:#dbe6ee; --glow:#6fd0ff; --glow-dim:#2b6f93;
+  --head:"Chakra Petch","Segoe UI",system-ui,sans-serif;
+  --body:"Source Serif 4",Georgia,serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{-webkit-user-select:none;user-select:none;margin:0;background:var(--void);color:var(--text);font:1.08rem/1.7 var(--body)}
+#swarm{pointer-events:none;position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block}
+.nav,main,footer{position:relative;z-index:1}
+
+.nav{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.8rem clamp(1rem,4vw,3rem);background:rgba(4,7,10,.94);border-bottom:1px solid var(--edge)}
+.brand{font:700 1.15rem var(--head);color:var(--glow);text-decoration:none}
+.nav nav{display:flex;gap:1.2rem;flex-wrap:wrap}
+.nav nav a{font:500 .92rem var(--head);color:var(--steel);text-decoration:none;padding:.2rem 0;border-bottom:2px solid transparent}
+.nav nav a:hover,.nav nav a:focus-visible{color:var(--text);border-color:var(--glow)}
+
+main{max-width:1000px;margin:0 auto;padding:0 1.2rem 4rem}
+.hero{min-height:calc(100vh - 60px);display:flex;flex-direction:column;justify-content:center;pointer-events:none}
+.hero .actions,.hero .btn{pointer-events:auto}
+.kicker{font:500 1rem var(--head);color:var(--glow);margin:0 0 .6rem}
+h1{font:700 clamp(2.4rem,7vw,5rem)/1.05 var(--head);margin:0 0 1.2rem;max-width:14em;text-shadow:0 0 40px rgba(111,208,255,.25)}
+.lead{font-size:1.25rem;max-width:36em;color:#b9c9d6}
+.actions{display:flex;gap:.8rem;flex-wrap:wrap;margin:1.5rem 0 1rem}
+.btn{font:500 1rem var(--head);color:var(--text);background:transparent;border:1px solid var(--glow-dim);padding:.7rem 1.3rem;border-radius:4px;cursor:pointer;text-decoration:none;transition:background .2s,border-color .2s}
+.btn:hover{background:rgba(111,208,255,.12);border-color:var(--glow)}
+.btn.primary{background:var(--glow);color:#04121a;border-color:var(--glow)}
+.btn.primary:hover{background:#9be0ff}
+.hint{color:var(--steel);font-size:.95rem;max-width:34em}
+:focus-visible{outline:2px solid var(--glow);outline-offset:3px}
+
+.panel{background:var(--plate);border:1px solid var(--edge);border-radius:6px;padding:clamp(1.3rem,4vw,2.6rem);margin:0 0 2rem}
+h2{font:700 clamp(1.6rem,4vw,2.3rem) var(--head);margin:0 0 1rem}
+h3{font:700 1.25rem var(--head);margin:2rem 0 .8rem;color:var(--glow)}
+h4{font:700 1.05rem var(--head);margin:0 0 .4rem}
+.panel p{max-width:42em}
+.qs{padding-left:1.3rem;max-width:42em}
+.grid{display:grid;gap:1rem}
+.grid.two{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.grid.three{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
+.grid.four{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+.card{background:rgba(3,8,12,.6);border:1px solid var(--edge);border-left:3px solid var(--glow-dim);border-radius:4px;padding:1rem 1.1rem}
+.card p,.card li{font-size:.98rem;margin:0;color:#c3d1dc}
+.card ul{margin:0;padding-left:1.1rem}
+.card li{margin-bottom:.5rem}
+
+.tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.2rem 0}
+.tabs button{font:500 .95rem var(--head);color:var(--steel);background:transparent;border:1px solid var(--edge);border-radius:4px;padding:.55rem 1rem;cursor:pointer}
+.tabs button[aria-selected=true]{color:#04121a;background:var(--glow);border-color:var(--glow)}
+.tabpane[hidden]{display:none}
+
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;min-width:720px;width:100%;font-size:.95rem}
+th,td{border:1px solid var(--edge);padding:.8rem;text-align:left;vertical-align:top}
+thead th{font-family:var(--head);color:var(--glow);background:rgba(3,8,12,.6)}
+tbody th{font-family:var(--head);width:7em}
+
+.refs{padding-left:1.2rem;font-size:.92rem;color:#b3c3d0}
+.refs li{margin-bottom:.6rem}
+footer{max-width:1000px;margin:0 auto;padding:1rem 1.2rem 3rem;color:var(--steel);font-size:.92rem}
+
+@media (max-width:640px){.nav nav{display:none}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+.refs{-webkit-user-select:text;user-select:text}

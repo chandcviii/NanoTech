@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Microbot Field | Ethical Issues Concerning Nanotechnology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;700&family=Source+Serif+4:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="swarm" aria-hidden="true"></canvas>
+
+<header class="nav">
+  <a href="#top" class="brand">Nano Ethics</a>
+  <nav>
+    <a href="#overview">Overview</a>
+    <a href="#science">Science</a>
+    <a href="#ethics">Ethical concerns</a>
+    <a href="#sts">STS lens</a>
+    <a href="#examples">Examples</a>
+    <a href="#references">References</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <p class="kicker">Science, Technology, and Society research paper</p>
+    <h1>Ethical Issues Concerning Nanotechnology</h1>
+    <p class="lead">Materials 1 to 100 nanometers wide can heal, power, and feed us. They can also harm in ways we do not fully understand yet. This site explains both sides.</p>
+    <div class="actions">
+      <a class="btn primary" href="#overview">Start reading</a>
+      <button class="btn" id="modeBtn" type="button">Swarm mode: Magnet</button>
+    </div>
+    <p class="hint">Move your cursor to steer the microbots. Hold the mouse button to pull them in. Click to send a pulse.</p>
+  </section>
+
+  <section id="overview" class="panel">
+    <h2>What is the problem?</h2>
+    <p>Nanotechnology manipulates materials at an extreme scale, roughly 1 to 100 nanometers. It is already used in medicine, electronics, agriculture, environmental protection, energy, and manufacturing.</p>
+    <p>But nanomaterials have unique properties, and their effects on human health and the environment are not always fully understood. Concerns include health risks, pollution, privacy and security, unequal access to benefits, and above all the responsible use of the technology.</p>
+    <h3>Research questions</h3>
+    <ol class="qs">
+      <li>What ethical issues come with developing and using nanotechnology?</li>
+      <li>What are its benefits and possible risks for individuals and society?</li>
+      <li>How does it affect human health and the environment?</li>
+      <li>Why does responsible development and use matter?</li>
+      <li>What can be done to promote safe, ethical use?</li>
+    </ol>
+    <h3>Who this helps</h3>
+    <div class="grid four">
+      <div class="card"><h4>Researchers and scientists</h4><p>Consider health and environmental effects early, and keep ethical standards in the lab.</p></div>
+      <div class="card"><h4>Policymakers</h4><p>A reference for rules on safe production, use, and disposal of nanomaterials.</p></div>
+      <div class="card"><h4>Industries</h4><p>Safe exposure limits, risk management, and clear labeling of nano products.</p></div>
+      <div class="card"><h4>Advocates</h4><p>Evidence on ecosystem and health impacts to support safer practices.</p></div>
+    </div>
+  </section>
+
+  <section id="science" class="panel">
+    <h2>The science at the nanoscale</h2>
+    <p>At 1 to 100 nanometers, materials behave differently from their bulk form. Three properties explain both the promise and the risk.</p>
+    <div class="grid three">
+      <div class="card"><h4>Quantum effects</h4><p>Quantum physics dominates. Conductivity, magnetism, reactivity, and color change. Gold can look red or purple.</p></div>
+      <div class="card"><h4>High surface area</h4><p>Smaller particles put more atoms on the surface, which raises reactivity. That helps medicine, energy storage, and water purification.</p></div>
+      <div class="card"><h4>Biological interaction</h4><p>Nanoparticles can cross cell membranes and even the blood-brain barrier. That enables targeted drugs but raises toxicity and bioaccumulation concerns.</p></div>
+    </div>
+    <h3>Where it is used</h3>
+    <div class="grid four">
+      <div class="card"><h4>Medicine</h4><p>Targeted drug delivery, especially for cancer, plus biosensors and imaging agents (Al-Thani et al., 2024).</p></div>
+      <div class="card"><h4>Electronics</h4><p>Graphene and carbon nanotubes in smaller, more efficient devices and sensors (Semkin et al., 2022).</p></div>
+      <div class="card"><h4>Agriculture</h4><p>Nano-fertilizers cut waste, and nanosensors monitor soil and plants (Santos et al., 2025).</p></div>
+      <div class="card"><h4>Manufacturing</h4><p>Light, strong nanocomposites for aerospace, construction, and coatings.</p></div>
+    </div>
+  </section>
+
+  <section id="ethics" class="panel">
+    <h2>Ethical concerns</h2>
+    <p>Pick a concern to read how the paper frames it.</p>
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-tab="t1">Health and safety</button>
+      <button role="tab" aria-selected="false" data-tab="t2">Environment</button>
+      <button role="tab" aria-selected="false" data-tab="t3">Equity</button>
+      <button role="tab" aria-selected="false" data-tab="t4">Society and governance</button>
+    </div>
+    <div class="tabpane" id="t1">
+      <p>Nanoparticles can cross some biological barriers and interact with cells in unpredictable ways. That raises questions about toxicity, bioaccumulation, and long-term exposure. Risks vary with particle size, shape, and composition. These uncertainties call for strict monitoring, transparent regulation, and responsible innovation (Inbathamizh et al., 2023).</p>
+      <p>Consumer products such as cosmetics, clothing, food packaging, and pharmaceuticals already carry nanomaterials, so public trust depends on open policy and rigorous health monitoring.</p>
+    </div>
+    <div class="tabpane" id="t2" hidden>
+      <p>Producing, using, and disposing of nanomaterials can release pollutants into soil and water. Devasena et al. (2022) note that nanoparticles can build up in the environment and harm plants and aquatic life.</p>
+      <p>That threatens farming, fisheries, and clean water for the communities that depend on them. Ethical responsibility means safe disposal by industry and enforced environmental rules by governments.</p>
+    </div>
+    <div class="tabpane" id="t3" hidden>
+      <p>Salamanca-Buentello and Daar (2021) argue that risks and benefits are not shared evenly. Wealthy nations and corporations gain the advanced nanomedicine and industrial applications, while low-income and minority communities carry more of the environmental and health risk.</p>
+      <p>Biroudian et al. (2020) call this the "nano-divide" and say fair access needs intentional policy and global cooperation.</p>
+    </div>
+    <div class="tabpane" id="t4" hidden>
+      <p>Scholars point to surveillance misuse, military applications, and the nano-divide between those with access and those without (Philosophy Institute, 2025).</p>
+      <p>Ethical frameworks need to address privacy, democratic oversight, and responsible innovation so that progress matches society's values.</p>
+    </div>
+  </section>
+
+  <section id="sts" class="panel">
+    <h2>Three ways to read the problem</h2>
+    <p>Through the STS lens, nanotechnology is a shared socio-technical reality, not only a scientific breakthrough. The paper compares three perspectives.</p>
+    <div class="scroll">
+    <table>
+      <thead><tr><th></th><th>Risk assessment</th><th>Justice and equity</th><th>Responsible innovation</th></tr></thead>
+      <tbody>
+        <tr><th>The problem</th><td>Unpredicted health and environmental hazards from nanomaterials' unique properties (dos Santos et al., 2022).</td><td>The nano-gap: unequal access to benefits between nations, industries, and marginalized groups (Biroudian et al., 2020).</td><td>Technology scales faster than ethical review, and public risk perception is misaligned (Boholm &amp; Larsson, 2019).</td></tr>
+        <tr><th>The solution</th><td>Risk-benefit balancing and standard toxicological safety evaluations (Resnik, 2019).</td><td>Inclusive policy and structural reform to close access gaps (Biroudian et al., 2020).</td><td>Safe-by-Design plus two-way public communication and early ethics (Bouchaut et al., 2021).</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section id="examples" class="panel">
+    <h2>Examples from the Philippines and abroad</h2>
+    <div class="grid two">
+      <div class="card"><h4>In the Philippines</h4>
+        <ul>
+          <li>DOST-ITDI made nanotextured stainless steel implants that the body accepts more easily.</li>
+          <li>UPLB developed a nano plant growth regulator that reduces chemical fertilizer use.</li>
+          <li>Central Luzon State University built a nanogold biosensor kit that detects African Swine Fever in 30 minutes.</li>
+          <li>The Mabuhay Straw nanofiltration device supplies clean drinking water.</li>
+        </ul></div>
+      <div class="card"><h4>Around the world</h4>
+        <ul>
+          <li>COVID-19 mRNA vaccines used lipid nanoparticles to carry genetic material.</li>
+          <li>Doxil and Abraxane deliver cancer drugs straight to tumors.</li>
+          <li>Perovskite solar cells have passed 26% efficiency.</li>
+          <li>Graphene filters remove harmful metals and bacteria from water, and UK nanoneedle patches collect biomarkers without pain.</li>
+        </ul></div>
+    </div>
+  </section>
+
+  <section id="conclusion" class="panel">
+    <h2>What the literature tells us</h2>
+    <p>Nanotechnology can help in medicine, electronics, agriculture, energy, and manufacturing. It also carries concerns about health, the environment, privacy and security, and unequal access. Because some effects are still not understood, both benefits and risks must be weighed.</p>
+    <p>The development of nanotechnology should come with ethical responsibility: sound research, safety measures, careful decisions, and appropriate policy, so society benefits while harm is reduced.</p>
+    <h3>How this study was done</h3>
+    <p>A descriptive and applied development design. The team reviewed journals, case studies, and institutional sources, then built this informational website. No surveys or interviews were used. The site is for students, especially IT students of PHINMA Saint Jude College Manila.</p>
+  </section>
+
+  <section id="references" class="panel">
+    <h2>References</h2>
+    <ul class="refs">
+      <li>Al-Thani, A. N., Jan, A. G., Abbas, M., Geetha, M., &amp; Sadasivuni, K. K. (2024). Nanoparticles in cancer theranostic and drug delivery: A comprehensive review. <i>Life Sciences, 352</i>, 122899.</li>
+      <li>Biroudian, S., Abbasi, M., &amp; Kiani, M. (2020). Theoretical and practical principles on nanoethics: A narrative review article. <i>Iranian Journal of Public Health, 48</i>(10).</li>
+      <li>Boholm, Å., &amp; Larsson, S. (2019). What is the problem? A literature review on challenges facing the communication of nanotechnology to the public. <i>Journal of Nanoparticle Research, 21</i>, 86.</li>
+      <li>Bouchaut, B., Asveld, L., Hanefeld, U., &amp; Vlierboom, A. (2021). Value conflicts in designing for safety. <i>International Journal of Environmental Research and Public Health, 18</i>(4), 1963.</li>
+      <li>da Rosa, M. M. (2022). Ethical issues in nanotechnology-I. In <i>Environmental, ethical, and economical issues of nanotechnology</i>. Jenny Stanford Publishing.</li>
+      <li>Devasena, T., et al. (2022). Insights on the dynamics and toxicity of nanoparticles in environmental matrices. <i>Bioinorganic Chemistry and Applications, 2022</i>, 4348149.</li>
+      <li>dos Santos, O. A. L., Pizzorno Backx, B., Abumousa, R. A., &amp; Bououdina, M. (2022). Environmental implications associated with the development of nanotechnology: From synthesis to disposal. <i>Nanomaterials, 12</i>(23), 4319.</li>
+      <li>Inbathamizh, L., et al. (2023). Nanotechnology: Ethical impacts, health issues, and safety issues. In <i>Modern Nanotechnology</i>. Springer.</li>
+      <li>Philosophy Institute. (2025). Ethical and social implications of nanotechnology: A critical overview.</li>
+      <li>Resnik, D. B. (2019). How should engineered nanomaterials be regulated for public and environmental health? <i>AMA Journal of Ethics, 21</i>(4), E363–E369.</li>
+      <li>Salamanca-Buentello, F., &amp; Daar, A. S. (2021). Nanotechnology, equity and global health. <i>Nature Nanotechnology, 16</i>, 358–361.</li>
+      <li>Santos, M. S., Santos, C. S., Fraceto, L. F., &amp; Oliveira, H. C. (2025). Agricultural nanotechnology for a safe and sustainable future. <i>Journal of the Science of Food and Agriculture, 105</i>(6), 3159–3169.</li>
+      <li>Semkin, A., Balakrishnan, R., &amp; Lazovič, S. (2022). Nanotechnology in electronics, materials properties, and devices. In <i>Nanotechnology in Electronics</i>. Wiley.</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <p>Submitted to the College of Arts and Sciences, PHINMA St. Jude College, Sampaloc Manila, in partial fulfillment of Science, Technology, and Society.</p>
+  <p>Researchers: John Ray Alacrito, Keith Andre Camingque, Lester Gutierrez, Lorraine Hachero, Christian Relos, Noel Reyes, Andres Panganiban, Raymond Perez, Dennise Pordelliza, Prince Dylan Obero.</p>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
