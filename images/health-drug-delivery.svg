@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Targeted nanoparticle drug delivery</title>
+  <desc id="desc">A glowing carrier particle travels toward a cell membrane, illustrating targeted medicine.</desc>
+  <defs>
+    <linearGradient id="bg" x2="0" y2="1"><stop stop-color="#0d2634"/><stop offset="1" stop-color="#050a10"/></linearGradient>
+    <radialGradient id="cell"><stop stop-color="#23718d"/><stop offset=".74" stop-color="#104254"/><stop offset="1" stop-color="#071720"/></radialGradient>
+    <radialGradient id="nano"><stop stop-color="#effcff"/><stop offset=".28" stop-color="#6fd0ff"/><stop offset="1" stop-color="#176080"/></radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="22"/></filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <g fill="none" stroke="#1e5369" opacity=".5"><path d="M0 155h1200M0 645h1200M120 0v800M1080 0v800"/></g>
+  <circle cx="915" cy="408" r="300" fill="#6fd0ff" opacity=".16" filter="url(#glow)"/>
+  <circle cx="940" cy="405" r="235" fill="url(#cell)" stroke="#6fd0ff" stroke-width="8"/>
+  <circle cx="1000" cy="418" r="84" fill="#0a202d" stroke="#2b6f93" stroke-width="5"/>
+  <circle cx="977" cy="394" r="18" fill="#6fd0ff" opacity=".55"/>
+  <path d="M100 405H650" stroke="#2b6f93" stroke-width="5" stroke-dasharray="12 18"/>
+  <path d="m630 382 36 23-36 23" fill="none" stroke="#6fd0ff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="390" cy="405" r="104" fill="#6fd0ff" opacity=".24" filter="url(#glow)"/>
+  <circle cx="390" cy="405" r="72" fill="url(#nano)" stroke="#c7f2ff" stroke-width="5"/>
+  <g fill="#f4fcff"><circle cx="372" cy="382" r="12"/><circle cx="414" cy="415" r="9"/><circle cx="365" cy="432" r="7"/></g>
+  <g fill="#6fd0ff" stroke="#d1f4ff" stroke-width="4">
+    <circle cx="738" cy="402" r="13"/><circle cx="753" cy="434" r="13"/><circle cx="747" cy="370" r="13"/>
+  </g>
+  <rect x="56" y="60" width="405" height="66" rx="8" fill="#08131ccc" stroke="#2b6f93"/>
+  <text x="82" y="103" fill="#dbe6ee" font-family="Segoe UI,sans-serif" font-size="27" letter-spacing="2">TARGETED DELIVERY</text>
+  <text x="390" y="545" text-anchor="middle" fill="#dbe6ee" font-family="Segoe UI,sans-serif" font-size="24">drug carrier</text>
+  <text x="940" y="710" text-anchor="middle" fill="#8aa0b2" font-family="Segoe UI,sans-serif" font-size="24">cell membrane</text>
+</svg>

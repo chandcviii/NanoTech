@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Nanotechnology innovation in the Philippines</title>
+  <desc id="desc">A stylized Philippine island chain connects research in health, agriculture, and clean water.</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#102c3a"/><stop offset="1" stop-color="#071018"/></linearGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <g fill="none" stroke="#24485a" opacity=".5"><path d="M0 170h1200M0 640h1200M160 0v800M1040 0v800"/></g>
+  <path d="M520 160q22-32 45 0l-18 60-25 12-15-34Zm100 100q35-17 50 20l-30 47-37-15Zm-115 74 36 7 25 42-26 65-35-12-18-48Zm100 70 28 20-5 70-40 33-24-38 17-60Zm-93 125 25 13-13 45-28-11Zm230-175 25 11-7 34-25-9Z" fill="#6fd0ff" opacity=".57" stroke="#c5f1ff" stroke-width="4"/>
+  <g fill="#6fd0ff" opacity=".22" filter="url(#glow)"><circle cx="540" cy="270" r="110"/><circle cx="740" cy="445" r="100"/><circle cx="390" cy="455" r="100"/></g>
+  <g stroke="#6fd0ff" stroke-width="4" stroke-dasharray="9 10" fill="none">
+    <path d="M550 316 330 430M583 345 750 435M542 390 570 605"/>
+  </g>
+  <g fill="#0a1821" stroke="#6fd0ff" stroke-width="5">
+    <circle cx="310" cy="440" r="83"/><circle cx="775" cy="450" r="83"/><circle cx="570" cy="635" r="83"/>
+  </g>
+  <g fill="none" stroke="#dbe6ee" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M280 465v-47l30-27 30 27v47m-45 0v-27h30v27"/>
+    <path d="M742 468q30-55 60 0m-78 0h96m-78-18v55m42-55v55"/>
+    <path d="M530 622h80l-10 44h-60Zm15 0v-27h48v27m-24-44v-20"/>
+  </g>
+  <rect x="54" y="52" width="460" height="68" rx="8" fill="#08131ccc" stroke="#2b6f93"/>
+  <text x="80" y="97" fill="#dbe6ee" font-family="Segoe UI,sans-serif" font-size="27" letter-spacing="2">PHILIPPINE INNOVATION</text>
+  <text x="310" y="563" text-anchor="middle" fill="#8aa0b2" font-family="Segoe UI,sans-serif" font-size="22">health</text>
+  <text x="775" y="563" text-anchor="middle" fill="#8aa0b2" font-family="Segoe UI,sans-serif" font-size="22">agriculture</text>
+  <text x="570" y="756" text-anchor="middle" fill="#8aa0b2" font-family="Segoe UI,sans-serif" font-size="22">clean water</text>
+</svg>

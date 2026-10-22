@@ -10,44 +10,52 @@
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<canvas id="swarm" aria-hidden="true"></canvas>
-
+<canvas id="bgMorph" class="bg-morph" aria-hidden="true"></canvas>
 <header class="nav">
-  <a href="#top" class="brand">Nano Ethics</a>
+  <a href="#top" class="brand" aria-label="Nano Ethics">Nano Ethics</a>
   <nav>
     <a href="#overview">Overview</a>
     <a href="#science">Science</a>
     <a href="#ethics">Ethical concerns</a>
     <a href="#sts">STS lens</a>
     <a href="#examples">Examples</a>
+    <a href="#quiz">Quiz</a>
     <a href="#references">References</a>
   </nav>
 </header>
 
 <main id="top">
   <section class="hero">
-    <p class="kicker">Science, Technology, and Society research paper</p>
-    <h1>Ethical Issues Concerning Nanotechnology</h1>
-    <p class="lead">Materials 1 to 100 nanometers wide can heal, power, and feed us. They can also harm in ways we do not fully understand yet. This site explains both sides.</p>
-    <div class="actions">
-      <a class="btn primary" href="#overview">Start reading</a>
-      <button class="btn" id="modeBtn" type="button">Swarm mode: Magnet</button>
+    <div class="hero-copy">
+      <p class="kicker">Science, Technology, and Society research paper</p>
+      <h1>Ethical Issues Concerning Nanotechnology</h1>
+      <p class="lead">Materials 1 to 100 nanometers wide can heal, power, and feed us. They can also harm in ways we do not fully understand yet. This site explains both sides.</p>
+      <div class="actions">
+        <a class="btn primary" href="#overview">Start reading</a>
+      </div>
+      <p class="hint" id="microbotHint">Click the microbot to break it into a swarm.</p>
     </div>
-    <p class="hint">Move your cursor to steer the microbots. Hold the mouse button to pull them in. Click to send a pulse.</p>
+
+    <!-- The big microbot itself is drawn by swarm.js on a fixed canvas, centred on .microbot-zone -->
+    <div class="microbot-stage" id="microbotStage" role="button" tabindex="0"
+         aria-label="Microbot. Activate to break it into a swarm and watch it rebuild."
+         aria-describedby="microbotHint">
+      <div class="microbot-zone"></div>
+      <span class="microbot-label" aria-hidden="true">Click to morph | Capsule</span>
+    </div>
+  </section>
+
+  <section class="showcase" aria-label="Illustration of targeted drug delivery">
+    <figure class="media wide">
+      <img src="images/nano-drug-delivery.svg" width="1200" height="800" alt="Nanoparticles docking on receptors on a cell membrane to deliver medicine to the cell" loading="eager" onerror="this.closest('.showcase').hidden=true">
+      <figcaption>Nanoparticles can carry medicine straight to specific cells. This precision is why nanotechnology is promising in medicine, and why its safety and ethics must be studied (Al-Thani et al., 2024). <span class="credit">Original illustration by our group.</span></figcaption>
+    </figure>
   </section>
 
   <section id="overview" class="panel">
     <h2>What is the problem?</h2>
     <p>Nanotechnology manipulates materials at an extreme scale, roughly 1 to 100 nanometers. It is already used in medicine, electronics, agriculture, environmental protection, energy, and manufacturing.</p>
     <p>But nanomaterials have unique properties, and their effects on human health and the environment are not always fully understood. Concerns include health risks, pollution, privacy and security, unequal access to benefits, and above all the responsible use of the technology.</p>
-    <h3>Research questions</h3>
-    <ol class="qs">
-      <li>What ethical issues come with developing and using nanotechnology?</li>
-      <li>What are its benefits and possible risks for individuals and society?</li>
-      <li>How does it affect human health and the environment?</li>
-      <li>Why does responsible development and use matter?</li>
-      <li>What can be done to promote safe, ethical use?</li>
-    </ol>
     <h3>Who this helps</h3>
     <div class="grid four">
       <div class="card"><h4>Researchers and scientists</h4><p>Consider health and environmental effects early, and keep ethical standards in the lab.</p></div>
@@ -60,6 +68,10 @@
   <section id="science" class="panel">
     <h2>The science at the nanoscale</h2>
     <p>At 1 to 100 nanometers, materials behave differently from their bulk form. Three properties explain both the promise and the risk.</p>
+    <figure class="media side">
+      <img src="images/science-nanoparticles.svg" loading="lazy" width="1200" height="800" alt="An electron-microscope-inspired illustration of nanoparticles clustered on a dark field" onerror="this.closest('figure').hidden=true">
+      <figcaption>Electron-microscope views make the nanoscale visible and help explain why a material can behave differently as nanoparticles than it does in bulk. <span class="credit">Image: Original vector illustration</span></figcaption>
+    </figure>
     <div class="grid three">
       <div class="card"><h4>Quantum effects</h4><p>Quantum physics dominates. Conductivity, magnetism, reactivity, and color change. Gold can look red or purple.</p></div>
       <div class="card"><h4>High surface area</h4><p>Smaller particles put more atoms on the surface, which raises reactivity. That helps medicine, energy storage, and water purification.</p></div>
@@ -72,6 +84,38 @@
       <div class="card"><h4>Agriculture</h4><p>Nano-fertilizers cut waste, and nanosensors monitor soil and plants (Santos et al., 2025).</p></div>
       <div class="card"><h4>Manufacturing</h4><p>Light, strong nanocomposites for aerospace, construction, and coatings.</p></div>
     </div>
+    <svg class="size-scale" viewBox="0 0 600 310" width="100%" role="img" aria-label="Logarithmic size comparison in nanometers: nanoparticles range from 1 to 100 nanometers, a virus is about 100 nanometers, a red blood cell is about 7,000 nanometers, and a human hair is about 80,000 nanometers.">
+      <title>How small is nano?</title>
+      <text class="scale-title" x="30" y="32">How small is nano?</text>
+      <line class="scale-axis" x1="40" y1="245" x2="560" y2="245"/>
+      <g class="scale-ticks">
+        <line x1="40" y1="239" x2="40" y2="251"/><text x="40" y="272">1</text>
+        <line x1="144" y1="239" x2="144" y2="251"/><text x="144" y="272">10</text>
+        <line x1="248" y1="239" x2="248" y2="251"/><text x="248" y="272">100</text>
+        <line x1="352" y1="239" x2="352" y2="251"/><text x="352" y="272">1k</text>
+        <line x1="456" y1="239" x2="456" y2="251"/><text x="456" y="272">10k</text>
+        <line x1="560" y1="239" x2="560" y2="251"/><text x="560" y2="272">100k</text>
+      </g>
+      <text class="scale-unit" x="300" y="300">Size (nanometers, logarithmic scale)</text>
+      <line class="scale-guide" x1="550" y1="86" x2="550" y2="233"/>
+      <circle class="scale-point" cx="550" cy="245" r="7"/>
+      <text class="scale-label" x="532" y="62" text-anchor="end">Human hair</text>
+      <text class="scale-value" x="532" y="82" text-anchor="end">about 80,000 nm</text>
+      <line class="scale-guide" x1="440" y1="128" x2="440" y2="233"/>
+      <circle class="scale-point" cx="440" cy="245" r="7"/>
+      <text class="scale-label" x="422" y="104" text-anchor="end">Red blood cell</text>
+      <text class="scale-value" x="422" y="124" text-anchor="end">about 7,000 nm</text>
+      <line class="scale-guide" x1="248" y1="169" x2="248" y2="233"/>
+      <circle class="scale-point" cx="248" cy="245" r="7"/>
+      <text class="scale-label" x="266" y="145">Virus</text>
+      <text class="scale-value" x="266" y="165">about 100 nm</text>
+      <line class="scale-range" x1="40" y1="218" x2="248" y2="218"/>
+      <line class="scale-range-cap" x1="40" y1="209" x2="40" y2="227"/>
+      <line class="scale-range-cap" x1="248" y1="209" x2="248" y2="227"/>
+      <line class="scale-guide" x1="144" y1="218" x2="144" y2="233"/>
+      <text class="scale-label" x="144" y="184" text-anchor="middle">Nanoparticle range</text>
+      <text class="scale-value" x="144" y="204" text-anchor="middle">1–100 nm</text>
+    </svg>
   </section>
 
   <section id="ethics" class="panel">
@@ -86,10 +130,18 @@
     <div class="tabpane" id="t1">
       <p>Nanoparticles can cross some biological barriers and interact with cells in unpredictable ways. That raises questions about toxicity, bioaccumulation, and long-term exposure. Risks vary with particle size, shape, and composition. These uncertainties call for strict monitoring, transparent regulation, and responsible innovation (Inbathamizh et al., 2023).</p>
       <p>Consumer products such as cosmetics, clothing, food packaging, and pharmaceuticals already carry nanomaterials, so public trust depends on open policy and rigorous health monitoring.</p>
+      <figure class="media">
+        <img src="images/health-drug-delivery.svg" loading="lazy" width="1200" height="800" alt="Illustration of a targeted nanoparticle approaching a cell" onerror="this.closest('figure').hidden=true">
+        <figcaption>Drug-delivery research illustrates nanotechnology's potential to target treatment more precisely, while raising safety questions about how particles interact with the body. <span class="credit">Image: Original vector illustration</span></figcaption>
+      </figure>
     </div>
     <div class="tabpane" id="t2" hidden>
       <p>Producing, using, and disposing of nanomaterials can release pollutants into soil and water. Devasena et al. (2022) note that nanoparticles can build up in the environment and harm plants and aquatic life.</p>
       <p>That threatens farming, fisheries, and clean water for the communities that depend on them. Ethical responsibility means safe disposal by industry and enforced environmental rules by governments.</p>
+      <figure class="media">
+        <img src="images/environment-water.svg" loading="lazy" width="1200" height="800" alt="Illustration of water, aquatic life, and particles being filtered from a stream" onerror="this.closest('figure').hidden=true">
+        <figcaption>Water sampling connects nanomaterial disposal to the need for monitoring pollutants before they can accumulate and affect aquatic life or communities. <span class="credit">Image: Original vector illustration</span></figcaption>
+      </figure>
     </div>
     <div class="tabpane" id="t3" hidden>
       <p>Salamanca-Buentello and Daar (2021) argue that risks and benefits are not shared evenly. Wealthy nations and corporations gain the advanced nanomedicine and industrial applications, while low-income and minority communities carry more of the environmental and health risk.</p>
@@ -119,6 +171,10 @@
     <h2>Examples from the Philippines and abroad</h2>
     <div class="grid two">
       <div class="card"><h4>In the Philippines</h4>
+        <figure class="media">
+          <img src="images/ph-innovation.svg" loading="lazy" width="1200" height="800" alt="Illustration of Philippine nanotechnology research connecting medicine, agriculture, and water" onerror="this.closest('figure').hidden=true">
+          <figcaption>Local research examples show how nanotechnology can address health, agriculture, and clean-water needs in the Philippines. <span class="credit">Image: Original vector illustration</span></figcaption>
+        </figure>
         <ul>
           <li>DOST-ITDI made nanotextured stainless steel implants that the body accepts more easily.</li>
           <li>UPLB developed a nano plant growth regulator that reduces chemical fertilizer use.</li>
@@ -135,9 +191,19 @@
     </div>
   </section>
 
+  <section id="quiz" class="panel">
+    <h2>Test your knowledge</h2>
+    <p>See what you remember about nanotechnology and its ethical issues.</p>
+    <div id="quizApp"></div>
+  </section>
+
   <section id="conclusion" class="panel">
     <h2>What the literature tells us</h2>
     <p>Nanotechnology can help in medicine, electronics, agriculture, energy, and manufacturing. It also carries concerns about health, the environment, privacy and security, and unequal access. Because some effects are still not understood, both benefits and risks must be weighed.</p>
+    <figure class="media wide">
+      <img src="images/conclusion-lab.svg" loading="lazy" width="1200" height="800" alt="Illustration of a researcher studying a nanoparticle in a laboratory" onerror="this.closest('figure').hidden=true">
+      <figcaption>A laboratory setting underscores that responsible innovation depends on careful research, safety measures, and decisions that consider both benefits and possible harms. <span class="credit">Image: Original vector illustration</span></figcaption>
+    </figure>
     <p>The development of nanotechnology should come with ethical responsibility: sound research, safety measures, careful decisions, and appropriate policy, so society benefits while harm is reduced.</p>
     <h3>How this study was done</h3>
     <p>A descriptive and applied development design. The team reviewed journals, case studies, and institutional sources, then built this informational website. No surveys or interviews were used. The site is for students, especially IT students of PHINMA Saint Jude College Manila.</p>
@@ -160,6 +226,14 @@
       <li>Santos, M. S., Santos, C. S., Fraceto, L. F., &amp; Oliveira, H. C. (2025). Agricultural nanotechnology for a safe and sustainable future. <i>Journal of the Science of Food and Agriculture, 105</i>(6), 3159–3169.</li>
       <li>Semkin, A., Balakrishnan, R., &amp; Lazovič, S. (2022). Nanotechnology in electronics, materials properties, and devices. In <i>Nanotechnology in Electronics</i>. Wiley.</li>
     </ul>
+    <h3>Image credits</h3>
+    <ul class="refs image-credits">
+      <li>science-nanoparticles.svg — Original vector illustration created for this site.</li>
+      <li>health-drug-delivery.svg — Original vector illustration created for this site.</li>
+      <li>environment-water.svg — Original vector illustration created for this site.</li>
+      <li>ph-innovation.svg — Original vector illustration created for this site.</li>
+      <li>conclusion-lab.svg — Original vector illustration created for this site.</li>
+    </ul>
   </section>
 </main>
 
@@ -169,5 +243,7 @@
 </footer>
 
 <script src="script.js"></script>
+<script src="background.js"></script>
+<script src="swarm.js"></script>
 </body>
 </html>

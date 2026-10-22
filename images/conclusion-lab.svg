@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Responsible nanotechnology research</title>
+  <desc id="desc">A researcher studies a glowing nanoparticle through laboratory glassware.</desc>
+  <defs>
+    <linearGradient id="bg" x2="0" y2="1"><stop stop-color="#102633"/><stop offset="1" stop-color="#050a10"/></linearGradient>
+    <radialGradient id="lens"><stop stop-color="#d8f5ff"/><stop offset=".24" stop-color="#6fd0ff"/><stop offset="1" stop-color="#15506b"/></radialGradient>
+    <filter id="glow"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+  <rect width="1200" height="800" fill="url(#bg)"/>
+  <path d="M0 565h1200v235H0Z" fill="#09131a"/>
+  <path d="M70 195h1060M70 205h1060M85 205v330m1030-330v330" stroke="#29495a" stroke-width="8"/>
+  <g fill="#102533" stroke="#6fd0ff" stroke-width="5">
+    <path d="M205 270h110v130l45 80v34H160v-34l45-80Z"/>
+    <path d="M435 245h80v175l35 62v32H400v-32l35-62Z"/>
+    <path d="M760 275h95v150l42 73v32H718v-32l42-73Z"/>
+  </g>
+  <path d="M178 444h158v53H178Zm232 9h137v49H410Zm307 12h157v48H717Z" fill="#2b6f93" opacity=".65"/>
+  <g fill="#6fd0ff"><circle cx="223" cy="463" r="8"/><circle cx="267" cy="477" r="8"/><circle cx="302" cy="459" r="8"/><circle cx="451" cy="461" r="7"/><circle cx="497" cy="476" r="7"/><circle cx="763" cy="465" r="8"/><circle cx="817" cy="478" r="8"/></g>
+  <path d="M810 590q10-140 85-190 58-36 95 16 30 44 4 174l-34 37H846Z" fill="#0b1a23" stroke="#2b6f93" stroke-width="7"/>
+  <circle cx="923" cy="382" r="56" fill="#112a38" stroke="#6fd0ff" stroke-width="6"/>
+  <path d="M890 382h67m-33-33v67" stroke="#8aa0b2" stroke-width="7"/>
+  <circle cx="965" cy="354" r="118" fill="#6fd0ff" opacity=".25" filter="url(#glow)"/>
+  <circle cx="965" cy="354" r="74" fill="url(#lens)" stroke="#d1f4ff" stroke-width="5"/>
+  <g fill="#effcff"><circle cx="948" cy="337" r="10"/><circle cx="982" cy="365" r="7"/></g>
+  <path d="M920 433 820 570" stroke="#8aa0b2" stroke-width="18" stroke-linecap="round"/>
+  <rect x="52" y="48" width="495" height="68" rx="8" fill="#08131ccc" stroke="#2b6f93"/>
+  <text x="78" y="93" fill="#dbe6ee" font-family="Segoe UI,sans-serif" font-size="27" letter-spacing="2">RESEARCH / RESPONSIBILITY</text>
+  <path d="M570 675h350" stroke="#2b6f93" stroke-width="5"/>
+  <text x="745" y="728" text-anchor="middle" fill="#8aa0b2" font-family="Segoe UI,sans-serif" font-size="23">measure • understand • act responsibly</text>
+</svg>

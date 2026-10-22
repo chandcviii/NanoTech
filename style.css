@@ -1,24 +1,49 @@
 :root{
-  --void:#04070a; --plate:rgba(8,13,19,.9); --edge:#1d2b38; --steel:#8aa0b2;
+  --void:#000; --plate:rgba(8,13,19,.9); --edge:#1d2b38; --steel:#8aa0b2;
   --text:#dbe6ee; --glow:#6fd0ff; --glow-dim:#2b6f93;
   --head:"Chakra Petch","Segoe UI",system-ui,sans-serif;
   --body:"Source Serif 4",Georgia,serif;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:70px}
-body{-webkit-user-select:none;user-select:none;margin:0;background:var(--void);color:var(--text);font:1.08rem/1.7 var(--body)}
-#swarm{pointer-events:none;position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block}
-.nav,main,footer{position:relative;z-index:1}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{-webkit-user-select:none;user-select:none;margin:0;background:#000;color:var(--text);font:1.08rem/1.7 var(--body);overflow-x:clip}
+main,footer{position:relative;z-index:1}
 
-.nav{position:sticky;top:0;display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:.8rem clamp(1rem,4vw,3rem);background:rgba(4,7,10,.94);border-bottom:1px solid var(--edge)}
+/* ---- Fixed decorative canvases: never take part in page flow ---- */
+.bg-morph{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:0;transition:opacity .8s ease}
+.bg-morph.is-ready{opacity:1}
+/* swarm.js canvas (big microbot + particles). THIS RULE WAS MISSING: without it the canvas sat in the
+   document flow and pushed the nav down by one full viewport height. */
+.bg-swarm{position:fixed;top:0;left:0;z-index:2;pointer-events:none;display:block}
+html.bg-hover{cursor:pointer}
+
+/* ---- Navigation ---- */
+.nav{
+  position:sticky;top:0;z-index:10;
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  padding:.8rem clamp(1rem,4vw,3rem);
+  background:#000;
+  border-bottom:1px solid rgba(111,208,255,.18);
+  box-shadow:none;
+}
 .brand{font:700 1.15rem var(--head);color:var(--glow);text-decoration:none}
-.nav nav{display:flex;gap:1.2rem;flex-wrap:wrap}
+.nav nav{display:flex;gap:1.2rem;flex-wrap:nowrap}
 .nav nav a{font:500 .92rem var(--head);color:var(--steel);text-decoration:none;padding:.2rem 0;border-bottom:2px solid transparent}
 .nav nav a:hover,.nav nav a:focus-visible{color:var(--text);border-color:var(--glow)}
 
+/* ---- Hero ---- */
 main{max-width:1000px;margin:0 auto;padding:0 1.2rem 4rem}
-.hero{min-height:calc(100vh - 60px);display:flex;flex-direction:column;justify-content:center;pointer-events:none}
-.hero .actions,.hero .btn{pointer-events:auto}
+.hero{
+  min-height:calc(100vh - 60px);
+  min-height:calc(100svh - 60px);
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(180px,35%); /* Increased column width */
+  align-items:center;
+  gap:1.5rem;
+  pointer-events:none;           /* empty hero space stays "background" for the page-background click */
+}
+.hero-copy{min-width:0}
+.hero .actions,.hero .btn,.hero .microbot-stage{pointer-events:auto}
 .kicker{font:500 1rem var(--head);color:var(--glow);margin:0 0 .6rem}
 h1{font:700 clamp(2.4rem,7vw,5rem)/1.05 var(--head);margin:0 0 1.2rem;max-width:14em;text-shadow:0 0 40px rgba(111,208,255,.25)}
 .lead{font-size:1.25rem;max-width:36em;color:#b9c9d6}
@@ -30,12 +55,43 @@ h1{font:700 clamp(2.4rem,7vw,5rem)/1.05 var(--head);margin:0 0 1.2rem;max-width:
 .hint{color:var(--steel);font-size:.95rem;max-width:34em}
 :focus-visible{outline:2px solid var(--glow);outline-offset:3px}
 
-.panel{background:var(--plate);border:1px solid var(--edge);border-radius:6px;padding:clamp(1.3rem,4vw,2.6rem);margin:0 0 2rem}
+/* Clickable microbot area. The solid microbot and the particles are drawn by swarm.js on the fixed
+   canvas, centred on .microbot-zone and scaled to it. */
+.microbot-stage{
+  position:relative;
+  display:flex;flex-direction:column;
+  height:clamp(300px, 65vh, 600px); /* Increased height for bigger display */
+  cursor:pointer;
+  border-radius:8px;
+  touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;
+  transition: transform 0.3s ease;
+}
+.microbot-stage:hover {
+  transform: scale(1.02); /* Interactivity: subtle scale on hover */
+}
+.microbot-stage:active {
+  animation: microbot-pulse 0.4s ease-out; /* Interactivity: pulse on click */
+}
+.microbot-zone{flex:1;min-height:0}
+.microbot-label{
+  flex:none;text-align:center;padding:.5rem 0 0;
+  font:500 .72rem var(--head);letter-spacing:.16em;text-transform:uppercase;color:var(--steel);
+}
+
+/* Interactive pulse animation */
+@keyframes microbot-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(111, 208, 255, 0.4); }
+  70% { box-shadow: 0 0 0 20px rgba(111, 208, 255, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(111, 208, 255, 0); }
+}
+
+/* ---- Panels ---- */
+.panel{background:var(--plate);border:1px solid var(--edge);border-radius:6px;padding:clamp(1.3rem,4vw,2.6rem);margin:0 0 2rem;scroll-margin-top:80px}
 h2{font:700 clamp(1.6rem,4vw,2.3rem) var(--head);margin:0 0 1rem}
 h3{font:700 1.25rem var(--head);margin:2rem 0 .8rem;color:var(--glow)}
 h4{font:700 1.05rem var(--head);margin:0 0 .4rem}
 .panel p{max-width:42em}
-.qs{padding-left:1.3rem;max-width:42em}
 .grid{display:grid;gap:1rem}
 .grid.two{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
 .grid.three{grid-template-columns:repeat(auto-fit,minmax(230px,1fr))}
@@ -56,11 +112,228 @@ th,td{border:1px solid var(--edge);padding:.8rem;text-align:left;vertical-align:
 thead th{font-family:var(--head);color:var(--glow);background:rgba(3,8,12,.6)}
 tbody th{font-family:var(--head);width:7em}
 
-.refs{padding-left:1.2rem;font-size:.92rem;color:#b3c3d0}
+.refs{padding-left:1.2rem;font-size:.92rem;color:#b3c3d0;-webkit-user-select:text;user-select:text}
 .refs li{margin-bottom:.6rem}
 footer{max-width:1000px;margin:0 auto;padding:1rem 1.2rem 3rem;color:var(--steel);font-size:.92rem}
 
-@media (max-width:640px){.nav nav{display:none}}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+/* ---- Quiz ---- */
+:root{--quiz-correct:#61d98b;--quiz-wrong:#ff7373}
+.quiz-meta{display:flex;justify-content:space-between;gap:1rem;align-items:center;font:500 .95rem var(--head);color:var(--steel)}
+.quiz-score{color:var(--glow)}
+.quiz-progress{height:5px;margin:.65rem 0 1.4rem;background:var(--edge);border-radius:4px;overflow:hidden}
+.quiz-progress-fill{height:100%;background:var(--glow);transition:width .25s ease}
+.quiz-question{font:700 1.25rem/1.4 var(--head);margin:0 0 1rem}
+.quiz-options{display:grid;gap:.65rem}
+.quiz-option{width:100%;text-align:left;font:500 1rem/1.45 var(--head);color:var(--text);background:rgba(3,8,12,.6);border:1px solid var(--edge);border-radius:4px;padding:.75rem 1rem;cursor:pointer;transition:background .2s,border-color .2s}
+.quiz-option:hover:not(:disabled),.quiz-option:focus-visible{background:rgba(111,208,255,.1);border-color:var(--glow)}
+.quiz-option:disabled{cursor:default}
+.quiz-option.is-correct{color:var(--quiz-correct);background:rgba(97,217,139,.1);border-color:var(--quiz-correct)}
+.quiz-option.is-wrong{color:var(--quiz-wrong);background:rgba(255,115,115,.1);border-color:var(--quiz-wrong)}
+.quiz-feedback{min-height:1.7em;margin:.9rem 0;color:var(--steel)}
+.quiz-actions{margin-top:.8rem}
+.quiz-results{text-align:center}
+.quiz-results h3{margin:0 0 .5rem}
+.quiz-results-score{font:700 clamp(2rem,7vw,3rem)/1.2 var(--head);color:var(--glow);margin:.4rem 0}
 
-.refs{-webkit-user-select:text;user-select:text}
+/* ---- Figures ---- */
+figure.media{display:block;max-width:100%;margin:1.2rem 0}
+figure.media img{
+  display:block;width:100%;max-width:100%;height:auto;
+  border:1px solid var(--edge);border-radius:4px;
+  filter:saturate(.85) brightness(.92);
+  transition:border-color .2s,box-shadow .2s;
+}
+figure.media figcaption{padding:.65rem .8rem;font-size:.88rem;color:var(--steel);margin-top:.5rem}
+figure.media .credit{display:block;font-size:.8rem;opacity:.85}
+figure.media.wide{width:100%}
+figure.media.side{width:100%}
+figure.media:hover img,figure.media:focus-within img{border-color:var(--glow-dim);box-shadow:0 0 12px rgba(111,208,255,.16)}
+
+.size-scale{display:block;width:100%;height:auto;margin:1.5rem 0;overflow:visible}
+.size-scale text{fill:var(--text);font-family:var(--head)}
+.size-scale .scale-title{font-size:16px;font-weight:700;fill:var(--glow)}
+.size-scale .scale-label{font-size:12px;font-weight:700}
+.size-scale .scale-value,.size-scale .scale-ticks{font-size:11px;fill:var(--steel)}
+.size-scale .scale-axis,.size-scale .scale-ticks line{stroke:var(--edge);stroke-width:2}
+.size-scale .scale-guide{stroke:var(--edge);stroke-width:1;stroke-dasharray:3 4}
+.size-scale .scale-point{fill:var(--glow);stroke:var(--void);stroke-width:2}
+.size-scale .scale-range,.size-scale .scale-range-cap{stroke:var(--glow);stroke-width:5;stroke-linecap:round}
+.size-scale .scale-range-cap{stroke-width:2}
+.size-scale .scale-unit{text-anchor:middle;font-size:11px;fill:var(--steel)}
+
+/* ---- Showcase ---- */
+.showcase{margin:0 0 2rem;position:relative;z-index:1}
+.showcase figure.media{margin:0;animation:showcase-fade-in .6s ease both}
+.showcase figure.media img{
+  display:block;width:100%;height:auto;
+  border:1px solid var(--edge);border-radius:6px;
+  box-shadow:0 0 40px rgba(111,208,255,.12);
+  transition:border-color .2s,box-shadow .2s;
+}
+.showcase figure.media figcaption{font-size:.92rem;color:var(--steel);margin-top:.7rem;max-width:46em}
+.showcase .credit{display:block;font-size:.8rem;opacity:.85}
+.showcase figure.media:hover img{border-color:var(--glow-dim);box-shadow:0 0 48px rgba(111,208,255,.2)}
+@keyframes showcase-fade-in{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* ---- Nav polish ---- */
+.nav::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:1px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(111,208,255,.5),transparent);
+}
+.nav nav a{position:relative;border-bottom-color:transparent;color:var(--steel);transition:none}
+.nav nav a:hover,.nav nav a:focus-visible,.nav nav a.active{color:var(--text);border-bottom-color:transparent}
+.nav nav a::after{
+  content:"";position:absolute;left:0;right:0;bottom:-.15rem;height:2px;
+  background:var(--glow);transform:scaleX(0);transform-origin:center;opacity:0;
+}
+.nav .brand{
+  position:relative;overflow:hidden;color:transparent;
+  background:linear-gradient(105deg,var(--glow) 0%,var(--glow) 38%,#fff 50%,var(--glow) 62%,var(--glow) 100%);
+  background-size:220% 100%;background-position:100% 0;
+  -webkit-background-clip:text;background-clip:text;
+}
+.nav .brand::after{
+  content:"Nano Ethics";position:absolute;inset:0;color:transparent;
+  background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.9) 50%,transparent 65%);
+  background-size:220% 100%;background-position:center;
+  -webkit-background-clip:text;background-clip:text;pointer-events:none;
+}
+@media (prefers-reduced-motion:no-preference){
+  .nav nav a{transition:color .3s ease,text-shadow .3s ease,transform .3s ease}
+  .nav nav a:hover,.nav nav a:focus-visible{transform:translateY(-2px);text-shadow:0 0 10px rgba(111,208,255,.55)}
+  .nav nav a:hover::after,.nav nav a:focus-visible::after,.nav nav a.active::after{transform:scaleX(1);opacity:1}
+  .nav nav a::after{transition:transform .3s ease,opacity .3s ease}
+  .nav nav a.active::after{box-shadow:0 0 8px rgba(111,208,255,.55);animation:nav-active-pulse 2.5s ease-in-out infinite}
+  .nav{animation:nav-enter .7s ease-out}
+  .nav .brand,.nav nav a{animation:nav-item-enter .45s ease-out backwards}
+  .nav nav a:nth-child(1){animation-delay:.06s}
+  .nav nav a:nth-child(2){animation-delay:.12s}
+  .nav nav a:nth-child(3){animation-delay:.18s}
+  .nav nav a:nth-child(4){animation-delay:.24s}
+  .nav nav a:nth-child(5){animation-delay:.30s}
+  .nav nav a:nth-child(6){animation-delay:.36s}
+  .nav nav a:nth-child(7){animation-delay:.42s}
+  .nav .brand::after{animation:brand-shimmer 6s ease-in-out infinite}
+}
+@keyframes nav-enter{
+  from{transform:translateY(-100%);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
+@keyframes nav-item-enter{
+  from{transform:translateY(-6px);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
+@keyframes brand-shimmer{
+  0%,72%,100%{transform:translateX(-110%);opacity:0}
+  78%{opacity:1}
+  92%{transform:translateX(110%);opacity:1}
+}
+@keyframes nav-active-pulse{
+  0%,100%{opacity:.65}
+  50%{opacity:1}
+}
+
+/* ---- Responsive ---- */
+@media (min-width:801px){
+  figure.media.side{float:right;width:40%;margin:.4rem 0 1.2rem 1.2rem}
+  figure.media.side + .grid{clear:both}
+}
+@media (max-width:800px){
+  .nav nav{display:none}
+  figure.media.side{width:100%}
+  .hero{
+    grid-template-columns:minmax(0,1fr);
+    min-height:calc(100svh - 60px);
+    align-content:center;
+    gap:1rem;
+    padding-top:1.5rem;
+  }
+  .microbot-stage{height:clamp(280px, 45vh, 450px)} /* Increased mobile height */
+}
+@media (max-width:640px){
+  .quiz-meta{font-size:.88rem}
+  .quiz-option{padding:.7rem .8rem}
+  .showcase,.showcase figure.media,.showcase figure.media img{width:100%;max-width:100%}
+}
+
+/* ---- Reduced motion ---- */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .bg-morph{transition:none}
+  .quiz-progress-fill,.quiz-option{transition:none}
+  figure.media img{transition:none}
+  .showcase figure.media{animation:none}
+  .nav,.nav nav a,.nav nav a::after,.nav .brand::after{animation:none;transition:none}
+  .microbot-stage{transition:none;animation:none;transform:none}
+}
+/* =========================================
+   DAGDAG PARA PALAKIHIN ANG MICROBOT OBJECT
+   ========================================= */
+
+/* 1. Palalakihin natin yung lalagyan ng object (stage) para may space siya */
+.microbot-stage {
+  height: clamp(700px, 120vh, 1000px) !important; 
+  width: 100%;
+  max-width: 500px; /* Adjust mo nalang ito kung gusto mo pang lumapad (e.g. 600px) */
+  margin: 0 auto;
+}
+
+/* 2. Ito yung mismong mag-zoom in sa microbot (Scale) */
+.microbot-zone {
+  transform: scale(1.5s); /* Gawing 1.5 kung gusto mo pang mas malaki */
+  transform-origin: center center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible !important; /* Para hindi maputol yung ulo/buntot kung lumaki */
+}
+
+/* 3. Custom hover effect para mas malaman na pwedeng i-click */
+.microbot-stage:hover .microbot-zone {
+  transform: scale(1.35); /* Liliit o lalaki ng bahagya pag tinapat yung mouse */
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* 4. Para hindi maging OA sa mga cellphone */
+@media (max-width: 300px) {
+  .microbot-stage {
+    height: clamp(350px, 60vh, 500px) !important;
+    max-width: 100%;
+  }
+  .microbot-zone {
+    transform: scale(1.1); /* Slightly smaller scale sa mobile para hindi lumabas sa screen */
+  }
+}
+/* =========================================
+   PALAKIHIN ANG MICROBOT SA DISPLAY (BAGO I-CLICK)
+   ========================================= */
+
+/* 1. Palakihin ang espasyo ng column sa Hero layout (mula 35% gawing 45%) */
+.hero {
+  grid-template-columns: minmax(0, 1fr) minmax(250px, 45%) !important;
+}
+
+/* 2. Palakihin ang stage container para lumaki rin yung drawing sa loob */
+.microbot-stage {
+  height: clamp(400px, 75vh, 700px) !important; /* Mas mataas na container */
+  width: 100% !important;
+}
+
+/* 3. Siguraduhing umaabot sa dulo yung zone para mag-scale ng maayos yung JS */
+.microbot-zone {
+  width: 100%;
+  height: 100%;
+}
+
+/* 4. Ayusin ang mobile view para hindi sumobra sa screen */
+@media (max-width: 800px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr) !important;
+  }
+  .microbot-stage {
+    height: clamp(350px, 55vh, 500px) !important;
+  }
+}

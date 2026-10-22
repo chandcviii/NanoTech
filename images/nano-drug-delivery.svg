@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+  <title id="title">Targeted nanoparticle drug delivery</title>
+  <desc id="desc">Cyan nanoparticles carrying medicine dock with receptors along a cell membrane.</desc>
+  <defs>
+    <linearGradient id="background" x2="0" y2="1">
+      <stop stop-color="#0a1923"/>
+      <stop offset="1" stop-color="#04070a"/>
+    </linearGradient>
+    <linearGradient id="membrane" x2="0" y2="1">
+      <stop stop-color="#1c526b"/>
+      <stop offset=".48" stop-color="#0c2633"/>
+      <stop offset="1" stop-color="#173f53"/>
+    </linearGradient>
+    <radialGradient id="particle">
+      <stop stop-color="#e4faff"/>
+      <stop offset=".22" stop-color="#9be0ff"/>
+      <stop offset=".65" stop-color="#42a9d6"/>
+      <stop offset="1" stop-color="#15506b"/>
+    </radialGradient>
+    <filter id="softGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="20"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M0 0 10 5 0 10Z" fill="#6fd0ff"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="800" fill="url(#background)"/>
+  <g fill="none" stroke="#284552" stroke-width="2" opacity=".46">
+    <path d="M0 145h1200M0 655h1200M150 0v800M1050 0v800"/>
+    <path d="M0 185h1200M0 615h1200"/>
+  </g>
+  <ellipse cx="390" cy="400" rx="245" ry="205" fill="#2bb3e5" opacity=".14" filter="url(#softGlow)"/>
+  <path d="M0 532q100-23 200 0t200 0 200 0 200 0 200 0 200 0v268H0Z" fill="url(#membrane)" opacity=".92"/>
+  <path d="M0 532q100-23 200 0t200 0 200 0 200 0 200 0 200 0" fill="none" stroke="#6fd0ff" stroke-width="7"/>
+  <path d="M0 615q100-23 200 0t200 0 200 0 200 0 200 0 200 0" fill="none" stroke="#2b6f93" stroke-width="5" opacity=".9"/>
+  <g fill="#163d50" stroke="#6fd0ff" stroke-width="4">
+    <path d="M250 523v-35q0-18 18-18t18 18v35Z"/>
+    <path d="M462 523v-48q0-18 18-18t18 18v48Z"/>
+    <path d="M680 523v-40q0-18 18-18t18 18v40Z"/>
+    <path d="M890 523v-52q0-18 18-18t18 18v52Z"/>
+  </g>
+  <g fill="#7ad8ff">
+    <circle cx="268" cy="468" r="8"/><circle cx="480" cy="451" r="8"/>
+    <circle cx="698" cy="458" r="8"/><circle cx="908" cy="448" r="8"/>
+  </g>
+  <path d="M236 398h42m181-18h46m177 24h46m177-35h46" stroke="#6fd0ff" stroke-width="3" stroke-dasharray="7 11" opacity=".75"/>
+  <g>
+    <circle cx="260" cy="355" r="90" fill="#6fd0ff" opacity=".27" filter="url(#softGlow)"/>
+    <circle cx="260" cy="355" r="62" fill="url(#particle)" stroke="#d7f7ff" stroke-width="5"/>
+    <circle cx="242" cy="337" r="12" fill="#f2fdff" opacity=".9"/>
+    <circle cx="275" cy="369" r="8" fill="#d8f6ff" opacity=".82"/>
+    <circle cx="470" cy="337" r="54" fill="url(#particle)" stroke="#d7f7ff" stroke-width="4"/>
+    <circle cx="455" cy="322" r="10" fill="#f2fdff" opacity=".9"/>
+    <circle cx="690" cy="355" r="68" fill="url(#particle)" stroke="#d7f7ff" stroke-width="5"/>
+    <circle cx="670" cy="335" r="12" fill="#f2fdff" opacity=".9"/>
+  </g>
+  <path d="M330 445q88 30 132 4m74-22q50-28 105 4m80 2q39 23 93 1" fill="none" stroke="#6fd0ff" stroke-width="4" marker-end="url(#arrow)" opacity=".78"/>
+  <rect x="56" y="48" width="435" height="72" rx="9" fill="#07131dde" stroke="#2b6f93" stroke-width="2"/>
+  <text x="82" y="94" fill="#dbe6ee" font-family="Chakra Petch,Segoe UI,sans-serif" font-size="28" font-weight="700" letter-spacing="2">TARGETED DRUG DELIVERY</text>
+  <rect x="820" y="240" width="304" height="130" rx="10" fill="#07131dcc" stroke="#2b6f93" stroke-width="2"/>
+  <text x="846" y="282" fill="#6fd0ff" font-family="Chakra Petch,Segoe UI,sans-serif" font-size="23" font-weight="700">MEDICINE CARRIER</text>
+  <text x="846" y="320" fill="#8aa0b2" font-family="Segoe UI,sans-serif" font-size="20">Nanoparticles transport</text>
+  <text x="846" y="348" fill="#8aa0b2" font-family="Segoe UI,sans-serif" font-size="20">a treatment toward its target.</text>
+  <rect x="826" y="683" width="286" height="66" rx="9" fill="#07131dcc" stroke="#2b6f93" stroke-width="2"/>
+  <text x="969" y="725" text-anchor="middle" fill="#dbe6ee" font-family="Chakra Petch,Segoe UI,sans-serif" font-size="22" font-weight="700">CELL MEMBRANE</text>
+  <path d="M969 674v-70" stroke="#6fd0ff" stroke-width="2" stroke-dasharray="5 7"/>
+</svg>
