@@ -43,7 +43,7 @@ main{max-width:1000px;margin:0 auto;padding:0 1.2rem 4rem}
   pointer-events:none;           /* empty hero space stays "background" for the page-background click */
 }
 .hero-copy{min-width:0}
-.hero .actions,.hero .btn,.hero .microbot-stage{pointer-events:auto}
+.hero .actions,.hero .btn{pointer-events:auto}
 .kicker{font:500 1rem var(--head);color:var(--glow);margin:0 0 .6rem}
 h1{font:700 clamp(2.4rem,7vw,5rem)/1.05 var(--head);margin:0 0 1.2rem;max-width:14em;text-shadow:0 0 40px rgba(111,208,255,.25)}
 .lead{font-size:1.25rem;max-width:36em;color:#b9c9d6}
@@ -55,24 +55,19 @@ h1{font:700 clamp(2.4rem,7vw,5rem)/1.05 var(--head);margin:0 0 1.2rem;max-width:
 .hint{color:var(--steel);font-size:.95rem;max-width:34em}
 :focus-visible{outline:2px solid var(--glow);outline-offset:3px}
 
-/* Clickable microbot area. The solid microbot and the particles are drawn by swarm.js on the fixed
-   canvas, centred on .microbot-zone and scaled to it. */
+/* Layout box for the microbot. The solid microbot and the particles are drawn by swarm.js on the fixed
+   canvas, centred on .microbot-zone and scaled to it. This box is NOT a hitbox: it ignores the mouse, so
+   only the visible microbot shape (hit-tested in swarm.js) reacts. It stays keyboard-focusable. */
 .microbot-stage{
   position:relative;
   display:flex;flex-direction:column;
   height:clamp(300px, 65vh, 600px); /* Increased height for bigger display */
-  cursor:pointer;
   border-radius:8px;
-  touch-action:manipulation;
+  pointer-events:none;
   -webkit-tap-highlight-color:transparent;
-  transition: transform 0.3s ease;
 }
-.microbot-stage:hover {
-  transform: scale(1.02); /* Interactivity: subtle scale on hover */
-}
-.microbot-stage:active {
-  animation: microbot-pulse 0.4s ease-out; /* Interactivity: pulse on click */
-}
+/* swarm.js adds this class to <html> only while the cursor is on the visible microbot */
+html.microbot-hover{cursor:pointer}
 .microbot-zone{flex:1;min-height:0}
 .microbot-label{
   flex:none;text-align:center;padding:.5rem 0 0;
@@ -291,11 +286,8 @@ figure.media:hover img,figure.media:focus-within img{border-color:var(--glow-dim
   overflow: visible !important; /* Para hindi maputol yung ulo/buntot kung lumaki */
 }
 
-/* 3. Custom hover effect para mas malaman na pwedeng i-click */
-.microbot-stage:hover .microbot-zone {
-  transform: scale(1.35); /* Liliit o lalaki ng bahagya pag tinapat yung mouse */
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
+/* 3. (Removed) The hover zoom on the whole stage box reacted to an invisible area; the pointer cursor
+      over the visible microbot (html.microbot-hover) replaces it. */
 
 /* 4. Para hindi maging OA sa mga cellphone */
 @media (max-width: 300px) {

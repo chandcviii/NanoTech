@@ -2,6 +2,12 @@
 // The two background images are cut along the triangle mesh. On click, the cells ripple outward from the
 // click point: each one collapses and re-forms as the other pattern (the swarm itself lives in swarm.js).
 // Clicking again runs it the other way. Everything draws on one fixed canvas that never blocks clicks.
+//
+// SCROLL FIX: a click is stored as an event with its DOCUMENT position (clientX/Y + scroll offset), start
+// time and expiry. The wave front is measured from that document point, so a cell's progress depends on
+// (event, time, cell's document position = screen position + current scroll). Scrolling therefore moves the
+// ripple with the page content instead of leaving it pinned to the screen; the wave keeps expanding across
+// the whole page (also off-screen) until its own duration ends. Every click is its own event.
 (() => {
   'use strict';
 
@@ -18,7 +24,7 @@
   const LATTICE = { x0: 170, y0: 85, dx: 178, dy: 145 };
   const IMG_W = 1698, IMG_H = 926;                    // fallback until the files report their size
 
-  const WAVE = 1000;                                  // ms for the ripple to reach the far corner
+  const WAVE = 1000;                                  // ms for the ripple to reach the far corner of the screen
   const JITTER = 220;                                 // random ms added to each cell's start
   const DUR_MIN = 820, DUR_VAR = 280;                 // ms each cell takes to collapse and re-form
   const TAU = Math.PI * 2;
@@ -30,9 +36,15 @@
   let W = 0, H = 0, dpr = 1;
   let covs = [null, null];
   let tiles = [];
-  let mode = 0;                                       // 0 = Background 1, 1 = Background 2
+  let mode = 0;                                       // pattern requested by the latest click (0 = Background 1)
+  let baseMode = 0;                                   // pattern every cell shows when no ripple is running
   let animEnd = 0, rafId = 0, pending = null;
+  const events = [];                                  // running ripples, oldest first
   const active = [];
+
+  const docEl = document.documentElement;
+  const pageX = () => window.scrollX || window.pageXOffset || 0;
+  const pageY = () => window.scrollY || window.pageYOffset || 0;
 
   const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
   const easeIn = t => t * t * t;
@@ -85,8 +97,7 @@
       if (Math.max(...xs) < -4 || Math.min(...xs) > W + 4 || Math.max(...ys) < -4 || Math.min(...ys) > H + 4) return;
       const cx = (xs[0] + xs[1] + xs[2]) / 3, cy = (ys[0] + ys[1] + ys[2]) / 3;
       const n = tiles.length;
-      const t = { cx, cy, ex: [], ey: [], h1: hash(n * 3 + 1), h2: hash(n * 3 + 2), h3: hash(n * 3 + 3),
-                  from: 0, to: 0, t0: 0, dur: 1, v: 0 };
+      const t = { cx, cy, ex: [], ey: [], h1: hash(n * 3 + 1), h2: hash(n * 3 + 2), h3: hash(n * 3 + 3), v: 0 };
       for (let k = 0; k < 3; k++) {                    // outline pushed out 0.9px so neighbours overlap (no seams)
         const vx = xs[k] - cx, vy = ys[k] - cy, len = Math.hypot(vx, vy) || 1;
         t.ex.push(xs[k] + vx / len * 0.9); t.ey.push(ys[k] + vy / len * 0.9);
@@ -95,6 +106,8 @@
       t.bw = Math.max(...t.ex) + 1 - t.bx; t.bh = Math.max(...t.ey) + 1 - t.by;
       t.a = hash(n + 7.3) * TAU;
       t.sgn = hash(n + 91.7) < 0.5 ? -1 : 1;
+      t.dur = DUR_MIN + t.h2 * DUR_VAR;                // how long this cell takes to flip
+      t.jit = t.h1 * JITTER;                           // this cell's random extra delay
       tiles.push(t);
     };
 
@@ -109,7 +122,6 @@
         add([x, y], [x + dx, y], [x + dx / 2, y + dy], split);            // triangle pointing down
       }
     }
-    tiles.forEach(t => { t.from = t.to = t.v = mode; });
   }
 
   function layout(force) {
@@ -121,8 +133,7 @@
     canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
     canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
     covs = imgs.map(cover);
-    buildTiles();
-    animEnd = 0;
+    buildTiles();                                        // running ripples live in `events`, so they survive this
     return true;
   }
 
@@ -142,15 +153,27 @@
     ctx.restore();
   }
 
-  function valueAt(t, now) {
-    if (t.from === t.to) return t.to;
-    const k = (now - t.t0) / t.dur;
-    if (k <= 0) return t.from;
-    if (k >= 1) return t.to;
-    return t.from + (t.to - t.from) * k;
+  // Value of a cell (0 = Background 1 ... 1 = Background 2) at time `now`, for the current scroll (sx, sy).
+  // Events are replayed newest -> oldest. A newer ripple that has reached the cell turns it around from where
+  // it is at that moment (same rule as before), so the result is the blend  A + B * (value further back).
+  function valueAt(t, now, sx, sy) {
+    const px = t.cx + sx, py = t.cy + sy;                // the cell's position in DOCUMENT coordinates
+    let A = 0, B = 1, tc = now;
+    for (let i = events.length - 1; i >= 0; i--) {
+      const ev = events[i];
+      const dx = px - ev.x, dy = py - ev.y;
+      const d = Math.min(Math.sqrt(dx * dx + dy * dy) / ev.ref, ev.dMax);
+      const s = ev.t0 + Math.pow(d, 0.85) * WAVE + t.jit;   // moment the wave front reaches this cell
+      if (tc <= s) continue;                                // not reached yet at the time we are looking at
+      const k = (tc - s) / t.dur;
+      if (k >= 1) return A + B * ev.mode;                   // this ripple has finished with the cell
+      A += B * ev.mode * k; B *= 1 - k; tc = s;
+    }
+    return A + B * baseMode;
   }
 
   function renderTransition(now) {
+    const sx = pageX(), sy = pageY();
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.globalCompositeOperation = 'source-over';
     ctx.globalAlpha = 1;
@@ -165,9 +188,10 @@
     ctx.beginPath();
     let done = false;
     for (const t of tiles) {
-      const v = t.v = valueAt(t, now);
-      if (v >= 1) { pathCell(t); done = true; }
-      else if (v > 0) active.push(t);
+      const v = t.v = valueAt(t, now, sx, sy);
+      if (v >= 0.999) { t.v = 1; pathCell(t); done = true; }
+      else if (v > 0.001) active.push(t);
+      else t.v = 0;
     }
     if (done) {
       ctx.clip();
@@ -199,42 +223,44 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.globalCompositeOperation = 'source-over';
     ctx.globalAlpha = 1;
-    const c = covs[mode];
-    ctx.drawImage(imgs[mode], c.ox, c.oy, c.iw * c.cs, c.ih * c.cs);
+    const c = covs[baseMode];
+    ctx.drawImage(imgs[baseMode], c.ox, c.oy, c.iw * c.cs, c.ih * c.cs);
   }
 
-  // ---- Loop (runs only while something is moving) -------------------------------------------------------
+  // ---- Loop (runs only while a ripple is alive) ---------------------------------------------------------
   function frame(now) {
     rafId = 0;
-    const animating = now < animEnd;
-    if (animating) renderTransition(now); else renderIdle();
-    if (animating) kick();
+    if (events.length && now >= animEnd) {              // every ripple has reached every cell: commit the result
+      baseMode = events[events.length - 1].mode;
+      events.length = 0;
+      animEnd = 0;
+    }
+    if (events.length) { renderTransition(now); kick(); }
+    else renderIdle();
   }
   function kick() { if (!rafId && ready[0]) rafId = requestAnimationFrame(frame); }
 
   // ---- Switching ----------------------------------------------------------------------------------------
+  // x, y are DOCUMENT coordinates.
   function trigger(x, y) {
     if (!ready[0]) return;
     if (!ready[1]) { pending = [x, y]; return; }      // second image still downloading: run it once it lands
+    if (events.length) return;                       // accept another click only after this transition finishes
     mode = 1 - mode;
     if (reduce.matches) {                              // reduced motion: swap straight away, no animation
-      tiles.forEach(t => { t.from = t.to = t.v = mode; });
-      animEnd = 0; kick();
+      baseMode = mode; events.length = 0; animEnd = 0; kick();
       return;
     }
     const now = performance.now();
-    const far = Math.max(Math.hypot(x, y), Math.hypot(W - x, y), Math.hypot(x, H - y), Math.hypot(W - x, H - y)) || 1;
-    let end = 0;
-    for (const t of tiles) {
-      const cur = valueAt(t, now);                     // a click mid-ripple turns each cell around from where it is
-      if (Math.abs(cur - mode) < 0.001) { t.from = t.to = mode; t.v = mode; continue; }
-      const d = Math.hypot(t.cx - x, t.cy - y) / far;
-      t.from = cur; t.to = mode;
-      t.t0 = now + Math.pow(d, 0.85) * WAVE + t.h1 * JITTER;
-      t.dur = DUR_MIN + t.h2 * DUR_VAR;
-      end = Math.max(end, t.t0 + t.dur);
-    }
-    animEnd = end + 16;
+    const sx = pageX(), sy = pageY();
+    // Same speed as before: the wave needs WAVE ms to reach the screen corner that is farthest from the click.
+    const vx = clamp(x - sx, 0, W), vy = clamp(y - sy, 0, H);
+    const ref = Math.max(Math.hypot(vx, vy), Math.hypot(W - vx, vy), Math.hypot(vx, H - vy), Math.hypot(W - vx, H - vy)) || 1;
+    // The canvas only shows the viewport. Don't extend the cooldown across the full document height.
+    const dMax = 1;
+    const end = now + WAVE + JITTER + DUR_MIN + DUR_VAR + 16;
+    events.push({ x, y, ref, dMax, mode, t0: now, end });
+    animEnd = Math.max(animEnd, end);
     kick();
   }
 
@@ -242,19 +268,25 @@
   // Only the page background counts: the html/body margins and the empty space inside <main>.
   const isBackground = el => el === document.documentElement || el === document.body || (el && el.id === 'top');
 
+  // swarm.js publishes an exact hit test of the visible microbot shape. While the pointer is on the microbot
+  // the background stays quiet, so one click or hover never triggers both interactions.
+  const overMicrobot = e => typeof window.__microbotHit === 'function' && window.__microbotHit(e.clientX, e.clientY);
+
   document.addEventListener('click', e => {
-    if (e.button !== 0 || !isBackground(e.target)) return;
+    if (e.button !== 0 || !isBackground(e.target) || overMicrobot(e)) return;
     const sel = window.getSelection && window.getSelection();
     if (sel && String(sel).length) return;
-    trigger(e.clientX, e.clientY);
+    trigger(e.clientX + pageX(), e.clientY + pageY());   // viewport -> document coordinates
   });
   document.addEventListener('pointermove', e => {
     if (e.pointerType === 'touch') return;
-    document.documentElement.classList.toggle('bg-hover', isBackground(e.target));
+    document.documentElement.classList.toggle('bg-hover', isBackground(e.target) && !overMicrobot(e));
   }, { passive: true });
   document.addEventListener('mouseout', e => {
     if (!e.relatedTarget) document.documentElement.classList.remove('bg-hover');
   });
+  // The tab was in the background: rAF paused, so just catch up (frame() commits any finished ripples).
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) kick(); });
 
   let resizeTimer = 0;
   window.addEventListener('resize', () => {
@@ -262,7 +294,7 @@
     resizeTimer = setTimeout(() => { if (layout(false)) kick(); }, 120);
   });
   const onMotionChange = () => {
-    if (reduce.matches) { animEnd = 0; tiles.forEach(t => { t.from = t.to = t.v = mode; }); }
+    if (reduce.matches) { baseMode = mode; events.length = 0; animEnd = 0; }
     kick();
   };
   if (reduce.addEventListener) reduce.addEventListener('change', onMotionChange);
